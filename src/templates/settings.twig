@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * CraftCommerce Deal Maker plugin for Craft CMS 3.x
+ *
+ * CraftCommerce Deal Maker Settings.twig
+ *
+ * @author    Primitive Social
+ * @copyright Copyright (c) 2019 Primitive Social
+ * @link      primitivesocial.com
+ * @package   CraftcommerceDealMaker
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("primitivesocial\\craftcommercedealmaker\\assetbundles\\craftcommercedealmaker\\CraftcommerceDealMakerAsset") %}
+
+{{ forms.textField({
+    label: 'Some Field',
+    instructions: 'Enter some setting here.',
+    id: 'someAttribute',
+    name: 'someAttribute',
+    value: settings['someAttribute']})
+}}

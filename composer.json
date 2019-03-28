@@ -1,0 +1,43 @@
+{
+    "name": "primitivesocial/craft-commerce-deal-maker",
+    "description": "Checks if you are close a deal and tries to upsell ya",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "craftcommerce deal maker"
+    ],
+    "support": {
+        "docs": "https://github.com/PrimitiveSocial/craft-commerce-deal-maker/blob/master/README.md",
+        "issues": "https://github.com/PrimitiveSocial/craft-commerce-deal-maker/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Primitive Social",
+            "homepage": "primitivesocial.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "primitivesocial\\craftcommercedealmaker\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "CraftCommerce Deal Maker",
+        "handle": "craft-commerce-deal-maker",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/PrimitiveSocial/craft-commerce-deal-maker/master/CHANGELOG.md",
+        "components": {
+            "craftcommerceDealMakerService": "primitivesocial\\craftcommercedealmaker\\services\\CraftcommerceDealMakerService"
+        },
+        "class": "primitivesocial\\craftcommercedealmaker\\CraftcommerceDealMaker"
+    }
+}
