@@ -14,6 +14,11 @@ use primitivesocial\craftcommercedealmaker\CraftcommerceDealMaker;
 
 use Craft;
 use craft\base\Component;
+use Commerce\Helpers\CommerceDbHelper;
+use craft\commerce\Plugin;
+use craft\commerce\services\Discounts;
+use craft\commerce\models\LineItem;
+use craft\commerce\elements\Order;
 
 /**
  * CraftcommerceDealMakerService Service
@@ -30,26 +35,52 @@ use craft\base\Component;
  */
 class CraftcommerceDealMakerService extends Component
 {
-    // Public Methods
-    // =========================================================================
 
-    /**
-     * This function can literally be anything you want, and you can have as many service
-     * functions as you want
-     *
-     * From any other plugin file, call it like this:
-     *
-     *     CraftcommerceDealMaker::$plugin->craftcommerceDealMakerService->exampleService()
-     *
-     * @return mixed
-     */
-    public function exampleService()
-    {
-        $result = 'something';
-        // Check our Plugin's settings for `someAttribute`
-        if (CraftcommerceDealMaker::$plugin->getSettings()->someAttribute) {
-        }
+	protected $discounts;
 
-        return $result;
-    }
+	public function __construct() {
+
+		$this->discounts = Plugin::getInstance()->getDiscounts()->getAllDiscounts();
+
+	}
+
+	public function checkDeals(LineItem $lineitem)
+	{
+
+		// Iniital object
+		$result = false;
+		
+		// Check our Plugin's settings for the upsell
+		$upsellAt = CraftcommerceDealMaker::$plugin->getSettings()->upsellAt ?: 2;
+
+		// Find any associated discounts
+		foreach ($this->discounts as $discount) {
+
+			// Get purchaseable IDs
+			$ids = $discount->getPurchasableIds();
+		
+			foreach ($ids as $id) {
+
+				// If discount exists, and is within upsell threshold
+				if($id == $lineitem->id && $discount->perItemDiscount <= $lineitem->qty) {
+
+					if(!is_array($result)) $result = array();
+
+					$result[] = array(
+						'lineitem'			=> $lineitem,
+						'discount' 			=> $discount,
+						'current_quantity'	=> $lineitem->qty,
+						'deal_quantity'		=> $discount->perItemDiscount,
+					);
+
+				}
+
+			}
+
+		}
+		
+		return $result;
+
+	}
+
 }

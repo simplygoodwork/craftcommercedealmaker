@@ -39,7 +39,7 @@ class Settings extends Model
      *
      * @var string
      */
-    public $someAttribute = 'Some Default';
+    public $upsellAt = 2;
 
     // Public Methods
     // =========================================================================
@@ -57,8 +57,8 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['someAttribute', 'string'],
-            ['someAttribute', 'default', 'value' => 'Some Default'],
+            ['someAttribute', 'integer'],
+            ['someAttribute', 'default', 'value' => 2],
         ];
     }
 }

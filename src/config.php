@@ -24,7 +24,9 @@
 
 return [
 
-    // This controls blah blah blah
-    "someAttribute" => true,
+    // This controls the amount of the deal to parse before.
+    // So, if the deal happens at 5 and you want to upsell at 3, make this 2
+    // Because 2+3 = 5. That's just math.
+    "upsellAt" => 2,
 
 ];

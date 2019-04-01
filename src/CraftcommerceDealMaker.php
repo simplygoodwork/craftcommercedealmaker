@@ -11,14 +11,16 @@
 namespace primitivesocial\craftcommercedealmaker;
 
 use primitivesocial\craftcommercedealmaker\services\CraftcommerceDealMakerService as CraftcommerceDealMakerServiceService;
+use primitivesocial\craftcommercedealmaker\variables\CraftcommerceDealMakerVariable as CraftcommerceDealMakerVariable;
 use primitivesocial\craftcommercedealmaker\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
-
 use yii\base\Event;
+use craft\web\twig\variables\CraftVariable;
+use craft\commerce\elements\Order
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -77,38 +79,47 @@ class CraftcommerceDealMaker extends Plugin
      */
     public function init()
     {
+
         parent::init();
+
         self::$plugin = $this;
 
-        // Do something after we're installed
+        // Register our variables
         Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                    // We were just installed
-                }
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function (Event $event) {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('craftcommercedealmaker', CraftcommerceDealMakerVariable::class);
             }
         );
 
-/**
- * Logging in Craft involves using one of the following methods:
- *
- * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
- * Craft::info(): record a message that conveys some useful information.
- * Craft::warning(): record a warning message that indicates something unexpected has happened.
- * Craft::error(): record a fatal error that should be investigated as soon as possible.
- *
- * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
- *
- * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
- * the category to the method (prefixed with the fully qualified class name) where the constant appears.
- *
- * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
- * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
- *
- * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
- */
+        Event::on(
+            Order::class,
+            Order::EVENT_AFTER_ADD_LINE_ITEM,
+            function (Event $e) {
+
+                // Get lineitem from event
+                $lineitem = $e->lineItem;
+
+                // Get the deals
+                $service = new CraftcommerceDealMakerServiceService();
+
+                $deals = $service->getDeals($lineitem);
+
+                // Set variable
+                $variable = $event->sender;
+
+                $cdmv = new CraftcommerceDealMakerVariable();
+
+                $cdmv->deals = $deals;
+
+                $variable->set('craftcommercedealmaker', $cdmv);
+
+            }
+        );
+
         Craft::info(
             Craft::t(
                 'craft-commerce-deal-maker',

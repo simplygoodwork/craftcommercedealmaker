@@ -24,20 +24,14 @@ To install the plugin, follow these instructions.
 
 ## CraftCommerce Deal Maker Overview
 
--Insert text here-
-
-## Configuring CraftCommerce Deal Maker
-
--Insert text here-
-
-## Using CraftCommerce Deal Maker
-
--Insert text here-
-
-## CraftCommerce Deal Maker Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-Brought to you by [Primitive Social](primitivesocial.com)
+```
+{% if craft.craftcommercedealmaker.deals %}
+	{% for deal in craft.craftcommercedealmaker.deals %}
+	This displays a standard object with four params
+	'deal.lineitem' is the CraftCommerce line item associated with the deal
+	'deal.discount' is the CraftCommerce Discount object
+	'deal.current_quantity' is the current quantity of items in the Order object
+	'deal.deal_quantity' is the amount needed to get the deal
+	{% endfor %}
+{% endif %}
+```
