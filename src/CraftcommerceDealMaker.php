@@ -20,7 +20,7 @@ use craft\services\Plugins;
 use craft\events\PluginEvent;
 use yii\base\Event;
 use craft\web\twig\variables\CraftVariable;
-use craft\commerce\elements\Order
+use craft\commerce\elements\Order;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
