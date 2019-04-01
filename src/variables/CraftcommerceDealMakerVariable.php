@@ -11,13 +11,13 @@
 namespace primitivesocial\craftcommercedealmaker\variables;
 
 use primitivesocial\craftcommercedealmaker\CraftcommerceDealMaker;
-use primitivesocial\craftcommercedealmaker\\services\CraftcommerceDealMakerService;
+use primitivesocial\craftcommercedealmaker\services\CraftcommerceDealMakerService;
 
 use Craft;
 
 class CraftcommerceDealMakerVariable extends Component
 {
 
-	public function $deals;
+	public $deals;
 
 }
