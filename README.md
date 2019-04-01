@@ -27,7 +27,7 @@ To install the plugin, follow these instructions.
 ```
 {% if craft.craftcommercedealmaker.deals %}
 	{% for deal in craft.craftcommercedealmaker.deals %}
-		You ordered {{ deal.current_quantity }} of {{ deal.lineiem.getPurchasable().name }}! You can get {{ deal.discount.description }} if you order {% deal.deal_quantity - deal.current_quantity %} more!
+		You ordered {{ deal.current_quantity }} of {{ deal.lineiem.getPurchasable().name }}! You can get {{ deal.discount.description }} if you order {{ deal.deal_quantity - deal.current_quantity }} more!
 	{% endfor %}
 {% endif %}
 ```
