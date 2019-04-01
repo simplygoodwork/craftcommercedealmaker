@@ -27,11 +27,17 @@ To install the plugin, follow these instructions.
 ```
 {% if craft.craftcommercedealmaker.deals %}
 	{% for deal in craft.craftcommercedealmaker.deals %}
-	This displays a standard object with four params
-	'deal.lineitem' is the CraftCommerce line item associated with the deal
-	'deal.discount' is the CraftCommerce Discount object
-	'deal.current_quantity' is the current quantity of items in the Order object
-	'deal.deal_quantity' is the amount needed to get the deal
+		You ordered {{ deal.current_quantity }} of {{ deal.lineiem.getPurchasable().name }}! You can get {{ deal.discount.description }} if you order {% deal.deal_quantity - deal.current_quantity %} more!
 	{% endfor %}
 {% endif %}
 ```
+
+This displays a standard object with four params
+**deal.lineitem**: The CraftCommerce LineItem associated with the deal
+**deal.discount**: The CraftCommerce Discount object
+**deal.current_quantity**: The current quantity of items in the Order object
+**deal.deal_quantity**: The amount needed to get the deal
+
+## Contributing
+
+This is super early stage dev on this. Every PR is welcome.
