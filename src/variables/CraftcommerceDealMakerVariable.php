@@ -15,7 +15,7 @@ use primitivesocial\craftcommercedealmaker\services\CraftcommerceDealMakerServic
 
 use Craft;
 
-class CraftcommerceDealMakerVariable extends Component
+class CraftcommerceDealMakerVariable
 {
 
 	public $deals;
