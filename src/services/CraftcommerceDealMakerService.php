@@ -44,7 +44,7 @@ class CraftcommerceDealMakerService extends Component
 
 	}
 
-	public function checkDeals(LineItem $lineitem)
+	public function getDeals(LineItem $lineitem)
 	{
 
 		// Iniital object

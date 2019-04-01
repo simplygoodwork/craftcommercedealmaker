@@ -104,7 +104,7 @@ class CraftcommerceDealMaker extends Plugin
                 $lineitem = $e->lineItem;
 
                 // Get the deals
-                $service = new CraftcommerceDealMakerServiceService();
+                $service = new CraftcommerceDealMakerService();
 
                 $deals = $service->getDeals($lineitem);
 
