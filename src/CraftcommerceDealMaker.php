@@ -109,7 +109,7 @@ class CraftcommerceDealMaker extends Plugin
                 $deals = $service->getDeals($lineitem);
 
                 // Set variable
-                $variable = $event->sender;
+                $variable = $e->sender;
 
                 $cdmv = new CraftcommerceDealMakerVariable();
 
