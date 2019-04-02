@@ -10,7 +10,7 @@
 
 namespace primitivesocial\craftcommercedealmaker;
 
-use primitivesocial\craftcommercedealmaker\services\CraftcommerceDealMakerService as CraftcommerceDealMakerServiceService;
+use primitivesocial\craftcommercedealmaker\services\CraftcommerceDealMakerService as CraftcommerceDealMakerService;
 use primitivesocial\craftcommercedealmaker\variables\CraftcommerceDealMakerVariable as CraftcommerceDealMakerVariable;
 use primitivesocial\craftcommercedealmaker\models\Settings;
 
