@@ -2,7 +2,7 @@
     "name": "primitivesocial/craft-commerce-deal-maker",
     "description": "Checks if you are close a deal and tries to upsell ya",
     "type": "craft-plugin",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "keywords": [
         "craft",
         "cms",

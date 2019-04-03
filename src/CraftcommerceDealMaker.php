@@ -85,15 +85,15 @@ class CraftcommerceDealMaker extends Plugin
         self::$plugin = $this;
 
         // Register our variables
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('craftcommercedealmaker', CraftcommerceDealMakerVariable::class);
-            }
-        );
+        // Event::on(
+        //     CraftVariable::class,
+        //     CraftVariable::EVENT_INIT,
+        //     function (Event $event) {
+        //         * @var CraftVariable $variable 
+        //         $variable = $event->sender;
+        //         $variable->set('craftcommercedealmaker', CraftcommerceDealMakerVariable::class);
+        //     }
+        // );
 
         Event::on(
             Order::class,
@@ -109,13 +109,20 @@ class CraftcommerceDealMaker extends Plugin
                 $deals = $service->getDeals($lineitem);
 
                 // Set variable
-                $variable = $e->sender;
-
                 $cdmv = new CraftcommerceDealMakerVariable();
 
                 $cdmv->deals = $deals;
 
-                $variable->set('craftcommercedealmaker', $cdmv);
+                // Create watcher if there is a deal
+                Event::on(
+                    CraftVariable::class,
+                    CraftVariable::EVENT_INIT,
+                    function (Event $event) {
+                        /** @var CraftVariable $variable */
+                        $variable = $event->sender;
+                        $variable->set('craftcommercedealmaker', $cdmv);
+                    }
+                );
 
             }
         );
