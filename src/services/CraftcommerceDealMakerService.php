@@ -61,8 +61,8 @@ class CraftcommerceDealMakerService extends Component
 		
 			foreach ($ids as $id) {
 
-				// If discount exists, and is within upsell threshold
-				if($id == $lineitem->purchasableId && $discount->perItemDiscount <= $lineitem->qty) {
+				// If discount exists, and is within upsell threshold				
+				if($id == $lineitem->purchasableId && $discount->purchaseQty - $upsellAt <= $lineitem->qty && $lineitem->qty < $discount->purchaseQty) {
 
 					if(!is_array($result)) $result = array();
 
@@ -70,7 +70,7 @@ class CraftcommerceDealMakerService extends Component
 						'lineitem'			=> $lineitem,
 						'discount' 			=> $discount,
 						'current_quantity'	=> $lineitem->qty,
-						'deal_quantity'		=> $discount->perItemDiscount,
+						'deal_quantity'		=> $discount->purchaseQty,
 					);
 
 				}
