@@ -11,6 +11,7 @@
 namespace primitivesocial\craftcommercedealmaker\services;
 
 use primitivesocial\craftcommercedealmaker\CraftcommerceDealMaker;
+use primitivesocial\craftcommercedealmaker\variables\CraftcommerceDealMakerVariable;
 
 use Craft;
 use craft\base\Component;
