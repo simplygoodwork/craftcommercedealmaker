@@ -41,6 +41,8 @@ class Settings extends Model
      */
     public $upsellAt = 2;
 
+    public $upsellAtPercentage = .5;
+
     // Public Methods
     // =========================================================================
 
