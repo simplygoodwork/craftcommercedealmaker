@@ -36,6 +36,8 @@ class CraftcommerceDealMakerVariable
 
 		$upsellAt = CraftcommerceDealMaker::$plugin->getSettings()->upsellAt ?: 2;
 
+		$upsellAtPercentage = CraftcommerceDealMaker::$plugin->getSettings()->upsellAtPercentage ?: .5;
+
 		$order = Plugin::getInstance()->getCarts()->getCart();
 
 		$lineitems = $order->getLineItems();
@@ -51,7 +53,14 @@ class CraftcommerceDealMakerVariable
 				foreach ($ids as $id) {
 
 					// If discount exists, and is within upsell threshold				
-					if($id == $lineitem->purchasableId && $discount->purchaseQty - $upsellAt <= $lineitem->qty && $lineitem->qty < $discount->purchaseQty) {
+					if(
+						$id == $lineitem->purchasableId
+						&& (
+						 	$discount->purchaseQty - $upsellAt <= $lineitem->qty
+						 	|| ($discount->purchaseQty * $upsellAtPercentage) <= $lineitem->qty
+						)
+						&& $lineitem->qty < $discount->purchaseQty
+					) {
 
 						if(!is_array($result)) $result = array();
 

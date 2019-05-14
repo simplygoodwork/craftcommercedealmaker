@@ -28,5 +28,6 @@ return [
     // So, if the deal happens at 5 and you want to upsell at 3, make this 2
     // Because 2+3 = 5. That's just math.
     "upsellAt" => 2,
+    "upsellAtPercentage" => .5
 
 ];
