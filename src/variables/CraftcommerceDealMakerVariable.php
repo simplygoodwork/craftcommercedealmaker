@@ -49,6 +49,10 @@ class CraftcommerceDealMakerVariable
 
 				// Get purchaseable IDs
 				$ids = $discount->getPurchasableIds();
+
+				$available = [];
+
+				$lowestPrice = 1234567890;
 			
 				foreach ($ids as $id) {
 
@@ -64,17 +68,26 @@ class CraftcommerceDealMakerVariable
 
 						if(!is_array($result)) $result = array();
 
-						$result[] = array(
+						$available[] = array(
 							'lineitem'			=> $lineitem,
+							'cost'				=> $lineitem->price,
 							'name'				=> $lineitem->getPurchasable()->title,
 							'discount' 			=> $discount,
 							'current_quantity'	=> $lineitem->qty,
 							'deal_quantity'		=> $discount->purchaseQty,
 						);
 
+						if($lineitem->price < $lowestPrice) {
+							$lowestPrice = $lineitem->price;
+						}
+
 					}
 
 				}
+
+				$result[] = array_filter($available, function($a) use ($lowestPrice) {
+					return $a['cost'] == $lowestPrice;
+				});
 
 			}
 
