@@ -85,8 +85,8 @@ class CraftcommerceDealMakerVariable
 
 				}
 
-				$result[] = array_filter($available, function($a) use ($lowestPrice) {
-					return $a['cost'] == $lowestPrice;
+				$result = array_filter($available, function($a) use ($lowestPrice) {
+					return $a['cost'] <= $lowestPrice;
 				});
 
 			}
