@@ -58,9 +58,6 @@ class Settings extends Model
      */
     public function rules()
     {
-        return [
-            ['someAttribute', 'integer'],
-            ['someAttribute', 'default', 'value' => 2],
-        ];
+        return [];
     }
 }
