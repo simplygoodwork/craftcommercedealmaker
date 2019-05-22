@@ -59,14 +59,14 @@ class CraftcommerceDealMakerVariable
 					// If discount exists, and is within upsell threshold				
 					if(
 						$id == $lineitem->purchasableId
+						&& $lineitem->qty < $discount->purchaseQty
 						&& (
 						 	$discount->purchaseQty - $upsellAt <= $lineitem->qty
 						 	|| ($discount->purchaseQty * $upsellAtPercentage) <= $lineitem->qty
 						)
-						&& $lineitem->qty < $discount->purchaseQty
 					) {
 
-						if(!is_array($result)) $result = array();
+						if(!is_array($$available)) $$available = array();
 
 						$available[] = array(
 							'lineitem'			=> $lineitem,
@@ -85,9 +85,11 @@ class CraftcommerceDealMakerVariable
 
 				}
 
-				$result = array_filter($available, function($a) use ($lowestPrice) {
+				$filtered = array_filter($available, function($a) use ($lowestPrice) {
 					return $a['cost'] <= $lowestPrice;
 				});
+
+				$result = array_merge($result, $filtered);
 
 			}
 
