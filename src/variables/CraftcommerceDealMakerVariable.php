@@ -66,7 +66,7 @@ class CraftcommerceDealMakerVariable
 						)
 					) {
 
-						if(!is_array($$available)) $$available = array();
+						if(!is_array($available)) $available = array();
 
 						$available[] = array(
 							'lineitem'			=> $lineitem,
