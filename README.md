@@ -38,6 +38,8 @@ This displays a standard object with four params
 **deal.discount**: The CraftCommerce Discount object
 **deal.current_quantity**: The current quantity of items in the Order object
 **deal.deal_quantity**: The amount needed to get the deal
+**deal.total_quantity**: Total amount of various products in discount
+**deal.available**: Array of all products in loop
 
 ## Contributing
 

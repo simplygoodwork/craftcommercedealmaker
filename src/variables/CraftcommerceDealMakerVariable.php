@@ -26,7 +26,9 @@ class CraftcommerceDealMakerVariable
 	private $discounts;
 
 	public function __construct() {
+
 		$this->discounts = Plugin::getInstance()->getDiscounts()->getAllDiscounts();
+
 	}
 
 	public function get() {
@@ -53,6 +55,8 @@ class CraftcommerceDealMakerVariable
 				$available = [];
 
 				$lowestPrice = 1234567890;
+
+				$quantity = $discountQuantity = 0;
 			
 				foreach ($ids as $id) {
 
@@ -88,6 +92,10 @@ class CraftcommerceDealMakerVariable
 				$filtered = array_filter($available, function($a) use ($lowestPrice) {
 					return $a['cost'] <= $lowestPrice;
 				});
+
+				$filtered['available'] = $available;
+
+				$filtered['total_quantity'] = $quantity;
 
 				$result = array_merge($result, $filtered);
 
