@@ -48,7 +48,7 @@ class CraftcommerceDealMakerVariable
 		foreach ($this->discounts as $discount) {
 
 			// Get IDS and check if they're in the discount
-			$lineitemIDs = $this->getLineItems($lineitems);
+			$lineitemIDs = $this->getLineItemIds($lineitems);
 			
 			$discountLineItemIDs = $this->getDiscountedLineItemIds($discount);
 
