@@ -93,9 +93,13 @@ class CraftcommerceDealMakerVariable
 					return $a['cost'] <= $lowestPrice;
 				});
 
-				$filtered['available'] = $available;
+				foreach ($filtered as $key => $value) {
 
-				$filtered['total_quantity'] = $quantity;
+					$filtered[$key]['available'] = $available;
+
+					$filtered[$key]['total_quantity'] = $quantity;
+
+				}
 
 				$result = array_merge($result, $filtered);
 
