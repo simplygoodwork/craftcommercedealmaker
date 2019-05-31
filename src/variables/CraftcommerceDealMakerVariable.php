@@ -72,17 +72,19 @@ class CraftcommerceDealMakerVariable
 
 						if(!is_array($available)) $available = array();
 
-						$available[] = array(
+						$item = array(
 							'lineitem'			=> $lineitem,
-							'cost'				=> $lineitem->price,
+							'cost'				=> (float) $lineitem->price,
 							'name'				=> $lineitem->getPurchasable()->title,
 							'discount' 			=> $discount,
 							'current_quantity'	=> $lineitem->qty,
 							'deal_quantity'		=> $discount->purchaseQty,
 						);
 
-						if($lineitem->price < $lowestPrice) {
-							$lowestPrice = $lineitem->price;
+						$available[] = $item;
+
+						if($item['cost'] < $lowestPrice) {
+							$lowestPrice = $item['cost'];
 						}
 
 					}
