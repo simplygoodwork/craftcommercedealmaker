@@ -66,7 +66,7 @@ class CraftcommerceDealMakerVariable
 			// Loop through line items and get quantity
 			foreach ($lineitems as $lineitem) {
 
-				if(!in_array($lineitem->purchasableId, $lineitemIDs)) continue;
+				if(!in_array($lineitem->purchasableId, $lineitemIDs) && !(in_array($lineitem->purchasableId, $discountLineItemIDs))) continue;
 
 				$items[] = $lineitem;
 
