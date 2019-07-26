@@ -50,7 +50,14 @@ class CraftcommerceDealMakerVariable
 
 			$discountLineItemIDs = $this->getDiscountedLineItemIds($discount);
 
-			if(empty(array_intersect($lineitemIDs, $discountLineItemIDs))) continue;
+			// This is what you get for rushing
+			$found = false;
+
+			foreach ($lineitemIDs as $li) {
+				if(in_array($li, $discountLineItemIDs)) $found = true;
+			}
+
+			if(!$found) continue;
 
 			// Set vars
 			$items = [];
