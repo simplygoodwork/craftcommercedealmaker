@@ -31,7 +31,7 @@ class CraftcommerceDealMakerVariable
 
 	}
 
-	public function get() {
+	public function get($debug = false) {
 
 		// Get settings
 		$result = [];
@@ -57,56 +57,67 @@ class CraftcommerceDealMakerVariable
 				if(in_array($li, $discountLineItemIDs)) $found = true;
 			}
 
-			if(!$found) continue;
+			if($found) {
 
-			// Set vars
-			$items = [];
+				// Set vars
+				$items = [];
 
-			$lowestPrice = 1234567890;
+				$lowestPrice = 1234567890;
 
-			$lowestLineItem = null;
+				$lowestLineItem = null;
 
-			$quantity = 0;
+				$quantity = 0;
 
-			// Loop through line items and get quantity
-			foreach ($order->getLineItems() as $lineitem) {
+				// Loop through line items and get quantity
+				foreach ($order->getLineItems() as $lineitem) {
 
-				if(!in_array($lineitem->purchasableId, $lineitemIDs)) continue;
+					if(in_array($lineitem->purchasableId, $lineitemIDs) && in_array($lineitem->purchasableId, $discountLineItemIDs)) {
 
-				$items[] = $lineitem;
+						$items[] = $lineitem;
 
-				$quantity += $lineitem->qty;
+						$quantity += $lineitem->qty;
 
-				if($lineitem->price < $lowestPrice) {
+						if($lineitem->price < $lowestPrice) {
 
-					$lowestPrice = $lineitem->price;
+							$lowestPrice = $lineitem->price;
 
-					$lowestLineItem = $lineitem;
+							$lowestLineItem = $lineitem;
+
+						}
+
+					}
 
 				}
 
-			}
+				// Figure out if we should apply this one
+				if(
+					$quantity < $discount->purchaseQty
+					&& (
+					 	$quantity > ($discount->purchaseQty - $upsellAt)
+					 	|| $quantity > ($discount->purchaseQty * $upsellAtPercentage)
+					)
+				) {
 
-			// Figure out if we should apply this one
-			if(
-				$quantity < $discount->purchaseQty
-				&& (
-				 	$quantity > ($discount->purchaseQty - $upsellAt)
-				 	|| $quantity > ($discount->purchaseQty * $upsellAtPercentage)
-				)
-			) {
+					$dealItem = array(
+						'lineitem'			=> $lowestLineItem,
+						'cost'				=> $lowestLineItem->price,
+						'name'				=> $lowestLineItem->getPurchasable()->title,
+						'discount' 			=> $discount,
+						'current_quantity'	=> $quantity,
+						'deal_quantity'		=> $discount->purchaseQty,
+						'available'			=> $items
+					);
 
-				$dealItem = array(
-					'lineitem'			=> $lowestLineItem,
-					'cost'				=> $lowestLineItem->price,
-					'name'				=> $lowestLineItem->getPurchasable()->title,
-					'discount' 			=> $discount,
-					'current_quantity'	=> $quantity,
-					'deal_quantity'		=> $discount->purchaseQty,
-					'available'			=> $items
-				);
+					if($debug) {
+						$dealItem['debug'] = array(
+							'lineitemIDs' => $lineitemIDs,
+							'discountLineItemIDs' => $discountLineItemIDs
+						);
+					}
 
-				$result[] = $dealItem;
+					$result[] = $dealItem;
+
+				}
 
 			}
 
