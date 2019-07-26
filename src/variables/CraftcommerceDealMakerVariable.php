@@ -42,20 +42,18 @@ class CraftcommerceDealMakerVariable
 
 		$order = Plugin::getInstance()->getCarts()->getCart();
 
-		$lineitems = $order->getLineItems();
-
 		// Find any associated discounts
 		foreach ($this->discounts as $discount) {
 
 			// Get IDS and check if they're in the discount
-			$lineitemIDs = $this->getLineItemIds($lineitems);
-			
+			$lineitemIDs = $this->getLineItemIds($order->getLineItems());
+
 			$discountLineItemIDs = $this->getDiscountedLineItemIds($discount);
 
 			if(empty(array_intersect($lineitemIDs, $discountLineItemIDs))) continue;
 
 			// Set vars
-			$available = $items = [];
+			$items = [];
 
 			$lowestPrice = 1234567890;
 
@@ -64,9 +62,9 @@ class CraftcommerceDealMakerVariable
 			$quantity = 0;
 
 			// Loop through line items and get quantity
-			foreach ($lineitems as $lineitem) {
+			foreach ($order->getLineItems() as $lineitem) {
 
-				if(!in_array($lineitem->purchasableId, $lineitemIDs) && !(in_array($lineitem->purchasableId, $discountLineItemIDs))) continue;
+				if(!in_array($lineitem->purchasableId, $lineitemIDs)) continue;
 
 				$items[] = $lineitem;
 
@@ -86,12 +84,10 @@ class CraftcommerceDealMakerVariable
 			if(
 				$quantity < $discount->purchaseQty
 				&& (
-				 	$discount->purchaseQty - $upsellAt <= $quantity
-				 	|| ($discount->purchaseQty * $upsellAtPercentage) <= $quantity
+				 	$quantity > ($discount->purchaseQty - $upsellAt)
+				 	|| $quantity > ($discount->purchaseQty * $upsellAtPercentage)
 				)
 			) {
-
-				if(!is_array($available)) $available = array();
 
 				$dealItem = array(
 					'lineitem'			=> $lowestLineItem,
