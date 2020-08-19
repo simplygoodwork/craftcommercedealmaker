@@ -44,6 +44,8 @@ class CraftcommerceDealMakerVariable
 
 		// Find any associated discounts
 		foreach ($this->discounts as $discount) {
+			// Ignore any disabled discounts
+			if ($discount->enabled != true) { continue; }
 
 			// Get IDS and check if they're in the discount
 			$lineitemIDs = $this->getLineItemIds($order->getLineItems());
