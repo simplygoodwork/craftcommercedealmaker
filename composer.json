@@ -1,5 +1,5 @@
 {
-    "name": "primitivesocial/craft-commerce-deal-maker",
+    "name": "simplygoodwork/craft-commerce-deal-maker",
     "description": "Checks if you are close a deal and tries to upsell ya",
     "type": "craft-plugin",
     "version": "1.1.4",
@@ -11,8 +11,8 @@
         "craftcommerce deal maker"
     ],
     "support": {
-        "docs": "https://github.com/PrimitiveSocial/craft-commerce-deal-maker/blob/master/README.md",
-        "issues": "https://github.com/PrimitiveSocial/craft-commerce-deal-maker/issues"
+        "docs": "https://github.com/simplygoodwork/craftcommercedealmaker/blob/master/README.md",
+        "issues": "https://github.com/simplygoodwork/craftcommercedealmaker/issues"
     },
     "license": "MIT",
     "authors": [
