@@ -96,7 +96,7 @@ class CraftcommerceDealMakerVariable
 					$quantity < $discount->purchaseQty
 					&& (
 					 	$quantity > ($discount->purchaseQty - $upsellAt)
-					 	|| $quantity > ($discount->purchaseQty * $upsellAtPercentage)
+					 	|| $quantity >= ($discount->purchaseQty * $upsellAtPercentage)
 					)
 				) {
 
